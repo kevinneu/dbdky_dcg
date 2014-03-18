@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<request>
+  <monitordata cmaid="29M00000012252927" nodecount="3">
+    <datanode sensorid="29M00000012185332">
+      <type>012001</type>
+      <equipmentid>29M00000009151980</equipmentid>
+      <timestamp>2012-07-04 00:00:00</timestamp>
+      <attrs>
+        <attr name="INCLINATION" value="12.0"   alarm="False" />
+        <attr name="INCLINATION_X" value="1.0" alarm="False" />
+        <attr name="Inclination_Y" value="2.0" alarm="False" />
+        <attr name="Angle_X" value="2.0" alarm="False" />
+        <attr name="Angle_Y" value="3.0" alarm="False" />
+      </attrs>
+    </datanode>
+    <datanode sensorid="29M00000012185332">
+      <type>018002</type>
+      <equipmentid>29M00000009151980</equipmentid>
+      <timestamp>2012-06-04 00:00:00</timestamp>
+      <attrs>
+        <attr name="CHANNELNO" value="333.000"/>
+        <attr name="PRESETPOSITION" value="33.000"/>
+        <attr name="ISTYPICAL" value="T"/>
+        <attr name="CATEGORY" value="33.000"/>
+        <attr name="RESOLUTION" value="222.000"/>
+      </attrs>
+    </datanode>
+  </monitordata>
+</request>
