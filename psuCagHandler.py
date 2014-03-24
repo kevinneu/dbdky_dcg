@@ -2,6 +2,7 @@
 import asynchat
 import logging
 
+
 class psuCagHandler(asynchat.async_chat):
 	ac_in_buffer_size = 65535
 	ac_out_buffer_size = 1
@@ -11,7 +12,7 @@ class psuCagHandler(asynchat.async_chat):
 		self.logger = logging.getLogger('psuCagHandler')
 		asynchat.async_chat.__init__(self, sock)
 		self.process_data = self._process_command
-		self.set_terminator('\n\n')
+		self.set_terminator(r'\n\n')
 
 		return
 
@@ -26,7 +27,10 @@ class psuCagHandler(asynchat.async_chat):
 
 	def _porcess_data(self):
 		command = ''.join(self.received_data)
-		self.logger.debug('_process_command() %r', command)
+		self.logger.debug('_process_data() %r', command)
+		received_data = []
+		self._deliver2Cag(command)
+		self.push(r'hello')
 
 	def _process_command(self):
 		self.logger.debug('_process_command()')
@@ -34,3 +38,7 @@ class psuCagHandler(asynchat.async_chat):
 	def _process_message(self):
 		self.logger.debug('_process_message()')
 		self.close_when_done()
+
+	def _deliver2Cag(self, message):
+		self.logger.debug('_deliver2Cag %s', message)
+
