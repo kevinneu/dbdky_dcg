@@ -11,8 +11,8 @@ class psuCagHandler(asynchat.async_chat):
 		self.received_data = []
 		self.logger = logging.getLogger('psuCagHandler')
 		asynchat.async_chat.__init__(self, sock)
-		self.process_data = self._process_command
-		self.set_terminator(r'\n\n')
+		self.process_data = self._process_data
+		self.set_terminator('\n\n')
 
 		return
 
@@ -23,9 +23,9 @@ class psuCagHandler(asynchat.async_chat):
 
 	def found_terminator(self):
 		self.logger.debug('found_terminator()')
-		self.process_data
+		self.process_data()
 
-	def _porcess_data(self):
+	def _process_data(self):
 		command = ''.join(self.received_data)
 		self.logger.debug('_process_data() %r', command)
 		received_data = []
@@ -41,4 +41,5 @@ class psuCagHandler(asynchat.async_chat):
 
 	def _deliver2Cag(self, message):
 		self.logger.debug('_deliver2Cag %s', message)
+		
 

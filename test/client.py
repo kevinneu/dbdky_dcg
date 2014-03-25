@@ -30,4 +30,11 @@ except exception, ex:
 	logger.debug('exception')
 	sock.close()
 
+data = sock.recv(20)
+if not data:
+	logger.debug('receive fail')
+else:
+	logger.debug('message is %s', data)
+
+
 sock.close()
