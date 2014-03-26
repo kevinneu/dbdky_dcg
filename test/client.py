@@ -34,7 +34,7 @@ data = sock.recv(20)
 if not data:
 	logger.debug('receive fail')
 else:
-	logger.debug('message is %s', data)
+	logger.debug('message is %x', ord(data))
 
 
 sock.close()

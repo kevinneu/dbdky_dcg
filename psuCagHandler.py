@@ -2,6 +2,9 @@
 import asynchat
 import logging
 
+from xml.etree import ElementTree
+
+from cagAccessPoint import *
 
 class psuCagHandler(asynchat.async_chat):
 	ac_in_buffer_size = 65535
@@ -30,8 +33,15 @@ class psuCagHandler(asynchat.async_chat):
 		self.logger.debug('_process_data() %r', command)
 		received_data = []
 		self._deliver2Cag(command)
-		self.push(r'hello')
 
+                result = self._deliver2Cag(command)
+                
+                if True == result:
+                        self.push(chr(0x00))
+                else:
+                        self.push(chr(0xff))
+
+		
 	def _process_command(self):
 		self.logger.debug('_process_command()')
 		
@@ -41,5 +51,29 @@ class psuCagHandler(asynchat.async_chat):
 
 	def _deliver2Cag(self, message):
 		self.logger.debug('_deliver2Cag %s', message)
+		client = cagAccessPoint()
+		result = client.uploadCACData(message);
+		return self._validResponse(result)
+
+	def _validResponse(self, response):
+                root = ElementTree.fromstring(response)
+                response_node = root.find('response')
+                
+                if None == response_node:
+                        return False
+
+                result_node = root.find('result')
+                if None == result_node:
+                        return False
+
+                code = result_node.attrib['code']
+
+                self.logger.debug('*******%d', code)
+
+                if code == 0:
+                        return True
+                else:
+                        return True
+                
 		
 
