@@ -52,28 +52,22 @@ class psuCagHandler(asynchat.async_chat):
 	def _deliver2Cag(self, message):
 		self.logger.debug('_deliver2Cag %s', message)
 		client = cagAccessPoint()
-		result = client.uploadCACData(message);
+		result = client.uploadCACData(message)
 		return self._validResponse(result)
 
 	def _validResponse(self, response):
                 root = ElementTree.fromstring(response)
-                response_node = root.find('response')
-                
-                if None == response_node:
-                        return False
-
                 result_node = root.find('result')
                 if None == result_node:
+                        open('result.txt', 'w+').write('222')
                         return False
 
                 code = result_node.attrib['code']
 
-                self.logger.debug('*******%d', code)
-
-                if code == 0:
+                if code == '0':
                         return True
                 else:
-                        return True
+                        return False
                 
 		
 
