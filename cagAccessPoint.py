@@ -9,9 +9,7 @@ import logging
 class cagAccessPoint:
 	def __init__(self):
                 self.logger = logging.getLogger('cagAccessPoint')
-		#self.url = 'http://10.162.211.14:7003/TRANSFCAG/services/CAGAccessService?wsdl'
-		#self.imp = Import('http://www.w3.org/2001/XMLSchema', location='http://www.w3.org/2001/XMLSchema.xsd')
-		#self.imp.filter.add('http://10.162.211.14:7003/TRANSFCAG/services/')
+                
                 self._loadConfigs()
                 self.imp = Import(self.schama, location=self.schema_location)
                 self.imp.filter.add(self.cag_filter)

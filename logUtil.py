@@ -2,18 +2,11 @@ import logging
 from ConfigParser import SafeConfigParser
 import datetime
 
+import os
+import os.path
+
 import glob
 import logging.handlers
-
-# log_path=.
-# log_file_prefix=dbdky_dcg_
-# log_size_per_file=4096
-# log_piece_num=10
-# log_backup_period=1
-# log_backup_duration=30
-
-logging.basicConfig(level=logging.DEBUG,
-	format='%(name)-11s: %(message)s',)
 
 
 class logUtil:
@@ -69,33 +62,33 @@ class logUtil:
 
 	
 	def _updateLogFile(self):
-		logging.basicConfig(filename=self.log_file_name,
-			level=logging.DEBUG,)
+		if not os.path.exists(self.log_path):
+			os.mkdir(self.log_path)
+
+		self.logger = logging.getLogger('dbdky_dcg')
+		self.logger.setLevel(logging.DEBUG)
+		self.fh = logging.FileHandler(self.log_file_name)
+		self.fh.setLevel(logging.DEBUG)
+		self.formatter = logging.Formatter('%(asctime)s\t%(name)--11s\t%(levelname)--11s\t%(message)s')
+		self.fh.setFormatter(self.formatter)
+		self.logger.addHandler(self.fh)
 
 
-		# self.logger = logging.getLogger('logUtilLogger')
-		# self.logger.setLevel(logging.DEBUG)
-		# self.handler = logging.handlers.RotatingFileHandler(self.log_file_name,
-		# 	maxBytes=self.log_size_per_file,
-		# 	backupCount=self.log_piece_num,)
-		# self.logger.addHandler(self.handler)
+	def info(self, module, message):
+		self.logger.info('%s:\t%s', module, message)
 
-	def unittest(self):
-		for i in range(20):
-			logging.debug('i=%d' % i)
+	def debug(self, module, message):
+		self.logger.debug('%s:\t%s', module, message)
 
+	def critical(self, module, message):
+		self.logger.critical('%s:\t%s', module, message)
 
-if __name__ == '__main__':
-	logger = logging.getLogger('logUtil')
-	logger.setLevel(logging.DEBUG)
-	fh = logging.FileHandler('logUtil.log')
-	fh.setLevel(logging.DEBUG)
-
-	formatter = logging.Formatter('%s(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-	fh.setFormatter(formatter)
-	logger.addHandler(fh)
-
-	logger.debug('This message should go to file')
+	def warning(self, module, message):
+		self.logger.warning('%s:\t%s', module, message)
 
 
+# if __name__ == '__main__':
+# 	log = logUtil()
+# 	log.debug('server->cag', 'debug info')
+# 	log.critical('server->cag', 'critical info')
+# 	log.warning('server->cag', 'warning info')

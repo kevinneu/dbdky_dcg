@@ -10,10 +10,6 @@ class psuCagServer(asyncore.dispatcher):
 		asyncore.dispatcher.__init__(self)
 		self.logger =  logging.getLogger('psuCagServer')
 		self.addr = address
-		# self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
-		# self.bind(address)
-		# self.address = self.socket.getsockname()
-		# self.listen(5)
 		self._init_listen()
 
 		return
